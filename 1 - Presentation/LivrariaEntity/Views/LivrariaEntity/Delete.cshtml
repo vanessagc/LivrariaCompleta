@@ -1,0 +1,62 @@
+﻿@model LivrariaEntity.Models.Livraria
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Exclusão</h2>
+
+<h3>Confirma a exclusão deste Livraria?</h3>
+<div>
+    <h4>Livraria</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Autor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Autor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Preco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Preco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Imagem)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Imagem)*@
+            @if (Model.Imagem != null)
+            {
+                var base64 = Convert.ToBase64String(Model.Imagem);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                <img src='@imgSrc' style="max-width:100px; max-height:100px;" />
+            }
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

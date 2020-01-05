@@ -1,0 +1,74 @@
+﻿@model LivrariaEntity.Models.Livraria
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Alterar</h2>
+
+
+@using (Html.BeginForm("Edit", "LivrariaEntity", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Livraria</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.LivrariaID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Autor, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Autor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Autor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Preco, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Preco, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Preco, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Imagem, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="img1" name="img1" />
+                @*@Html.TextBoxFor(model => model.Imagem, new { type = "file", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Imagem, "", new { @class = "text-danger" })*@
+
+                @if (Model.Imagem != null)
+                {
+                    var base64 = Convert.ToBase64String(Model.Imagem);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    <img src='@imgSrc' style="max-width:100px; max-height:100px;" />
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

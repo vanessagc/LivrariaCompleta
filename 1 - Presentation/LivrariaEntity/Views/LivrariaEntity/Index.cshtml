@@ -1,0 +1,55 @@
+﻿@model IEnumerable<LivrariaEntity.ViewModels.LivrariaViewModel>
+@{
+    ViewBag.Title = "Lvraria";
+}
+
+<h2>Listagem de Livrarias - click do título para ordenar</h2>
+
+<p>
+    @Html.ActionLink("Novo Livraria", "Create", "LivrariaEntity")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           @Html.ActionLink("Nome", "Index", new { PropertyName = "Nome" }) @*@Html.DisplayNameFor(model => model.Nome)*@
+        </th>
+        <th>
+            @Html.ActionLink("Autor", "Index", new { PropertyName = "Autor" }) @*@Html.DisplayNameFor(model => model.Autor)*@
+        </th>
+        <th>
+            @Html.ActionLink("Preco", "Index", new { PropertyName = "Preco" }) @*@Html.DisplayNameFor(model => model.Preco)*@
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Imagem)*@
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Autor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Preco)
+        </td>
+        <td>
+            @if (item.Imagem != null)
+            {
+                    var base64 = Convert.ToBase64String(item.Imagem);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                <img src='@imgSrc' style="max-width:100px; max-height:100px;" />
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Alterar", "Edit", new { id=item.LivrariaID }) |
+            @Html.ActionLink("Consultar", "Details", new { id=item.LivrariaID }) |
+            @Html.ActionLink("Excluir", "Delete", new { id=item.LivrariaID })
+        </td>
+    </tr>
+}
+
+</table>
